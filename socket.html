@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocke</title>
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+</head>
+
+<body>
+
+<p id="st">status : none</p>
+<button id="btn">send socket</button>
+<button id="close">close</button>
+<button id="reconnect">reconnect</button>
+
+<script>
+var btn = document.getElementById("btn");
+var close = document.getElementById("close");
+var connection = new WebSocket('wss://echo.websocket.org');  
+
+//js処理
+btn.addEventListener("click", function(e) { 
+    connection.send("message");
+})
+
+close.addEventListener("click", function(e) { 
+    connection.close();
+})
+
+
+//websocket処理
+connection.onopen = function() {
+    console.log("connection is open");
+    st.innerText = "status : open";
+};
+
+connection.onmessage = function(e) {
+    console.log(e.data);
+};
+
+connection.onclose = function() { 
+    console.log("connection is close");
+    st.innerText = "status : close";
+};
+
+connection.onerror = function(error) {
+    console.log("error!");
+};
+</script>
+</body>
+</html>
